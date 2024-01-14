@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:flutter_naver_map_example/main.dart';
 
 class DoubleMapTestPage extends StatefulWidget {
   const DoubleMapTestPage({Key? key}) : super(key: key);
@@ -22,7 +23,14 @@ class _DoubleMapTestPageState extends State<DoubleMapTestPage> {
       body: SafeArea(
         child: Column(
           children: [
-            const Expanded(child: NaverMap()),
+            Expanded(child: NaverMap(
+              onMapReady: (controller) {
+                nDebugPrint("onMapReady", icon: "++", pageId: 2);
+              },
+              onMapLoaded: () {
+                nDebugPrint("onMapLoaded", icon: "🔥", pageId: 2);
+              },
+            )),
             Padding(
                 padding: const EdgeInsets.all(16),
                 child: ElevatedButton(
@@ -50,8 +58,15 @@ class _DoubleMapTestPageState extends State<DoubleMapTestPage> {
                         ? "start run"
                         : "stop (running, ${Duration(milliseconds: (maxCount - count) * 1200)} left)"))),
             Expanded(
-              child: map2Enabled
-                  ? const NaverMap()
+              child: !map2Enabled
+                  ? NaverMap(
+                onMapReady: (controller) {
+                  nDebugPrint("onMapReady", icon: "++", pageId: 3);
+                },
+                onMapLoaded: () {
+                  nDebugPrint("onMapLoaded", icon: "🔥", pageId: 3);
+                },
+              )
                   : Container(color: Colors.green),
             ),
           ],

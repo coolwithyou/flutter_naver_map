@@ -9,7 +9,6 @@ public class SwiftFlutterNaverMapPlugin: NSObject, FlutterPlugin {
         self.registrar = registrar
 
         initializeSdkChannel(binaryMessenger: registrar.messenger())
-        initializeCacheCount()
 
         let naverMapFactory = NaverMapFactory(messenger: registrar.messenger())
         registrar.register(naverMapFactory,
@@ -20,14 +19,6 @@ public class SwiftFlutterNaverMapPlugin: NSObject, FlutterPlugin {
     private static func initializeSdkChannel(binaryMessenger: FlutterBinaryMessenger) {
         let sdkChannel = FlutterMethodChannel(name: SwiftFlutterNaverMapPlugin.SDK_CHANNEL_NAME, binaryMessenger: binaryMessenger)
         _ = SdkInitializer(channel: sdkChannel)
-    }
-    
-    private static func initializeCacheCount() {
-        lastCacheCount = NMFOfflineStorage.shared.countOfBytesCompleted
-        // todo : Temporary load fix.
-//        NMFOfflineStorage.shared.resetDatabase(completionHandler: {_ in
-//            print("NMFOflineStorage(Cache) reseted!")
-//        })
     }
 
     private static let SDK_CHANNEL_NAME = "flutter_naver_map_sdk"

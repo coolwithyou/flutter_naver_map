@@ -5,6 +5,7 @@ internal class NaverMapView: NSObject, FlutterPlatformView {
     private let naverMapViewOptions: NaverMapViewOptions
     private let naverMapControlSender: NaverMapControlSender
     private var eventDelegate: NaverMapViewEventDelegate!
+    private var cacheDelegate: NaverMapOfflineCacheDelegate!
 
     init(frame: CGRect, options: NaverMapViewOptions, channel: FlutterMethodChannel, overlayController: OverlayController) {
         naverMap = NMFNaverMapView(frame: frame)
@@ -17,14 +18,16 @@ internal class NaverMapView: NSObject, FlutterPlatformView {
     }
 
     private func onMapReady() {
-        setMapTapListener()
+        setMapEventListener()
         naverMapControlSender.onMapReady()
     }
 
-    private func setMapTapListener() {
+    private func setMapEventListener() {
         eventDelegate = NaverMapViewEventDelegate(sender: naverMapControlSender,
                 initializeConsumeSymbolTapEvents: naverMapViewOptions.consumeSymbolTapEvents)
         eventDelegate.registerDelegates(mapView: naverMap.mapView)
+        cacheDelegate = NaverMapOfflineCacheDelegate(sender: naverMapControlSender)
+        cacheDelegate.startObserve()
     }
 
     func view() -> UIView {
@@ -32,6 +35,7 @@ internal class NaverMapView: NSObject, FlutterPlatformView {
     }
 
     deinit {
+        eventDelegate.unregisterDelegates(mapView: naverMap.mapView)
         (naverMapControlSender as! NaverMapController).removeChannel()
     }
 }

@@ -86,20 +86,38 @@ class _FNMapPageState extends State<FNMapPage> {
   Widget mapWidget() {
     final mapPadding = EdgeInsets.only(bottom: drawerHeight - safeArea.bottom);
     return NaverMap(
-      options: options.copyWith(contentPadding: mapPadding),
+      options: options.copyWith(contentPadding: mapPadding, initialCameraPosition: randomCameraPosition),
       onMapReady: onMapReady,
       onMapTapped: onMapTapped,
       onSymbolTapped: onSymbolTapped,
       onCameraChange: onCameraChange,
       onCameraIdle: onCameraIdle,
       onSelectedIndoorChanged: onSelectedIndoorChanged,
+      onMapLoaded: () {
+        nDebugPrint("onMapLoaded", icon: "🔥", pageId: 1);
+      },
     );
   }
+
+  static const testCameraPositions = [
+    NCameraPosition(target: NLatLng(37.55, 126.914), zoom: 15),
+    NCameraPosition(target: NLatLng(37.5, 127.028), zoom: 16),
+    NCameraPosition(target: NLatLng(37.5, 127.035), zoom: 17),
+    NCameraPosition(target: NLatLng(37.45, 126.944), zoom: 10),
+    NCameraPosition(target: NLatLng(36.487, 127.26), zoom: 14),
+    NCameraPosition(target: NLatLng(35.16, 129.058), zoom: 13),
+    NCameraPosition(target: NLatLng(33.49, 126.496), zoom: 16),
+  ];
+
+// 랜덤 포지션 얻기 함수 예제. 순차적으로 가져가도 상관 없습니다.
+  NCameraPosition get randomCameraPosition =>
+      testCameraPositions[Random().nextInt(testCameraPositions.length)];
 
   /* ----- Events ----- */
 
   void onMapReady(NaverMapController controller) {
     mapController = controller;
+    nDebugPrint("onMapReady", icon: "++", pageId: 1);
   }
 
   void onMapTapped(NPoint point, NLatLng latLng) async {
@@ -199,4 +217,14 @@ class _FNMapPageState extends State<FNMapPage> {
           MaterialPageRoute(builder: (context) => const NewWindowTestPage())),
     ),
   ];
+}
+
+
+String get nDebugTimeStamp {
+  final n = DateTime.now();
+  return "${n.minute.toString().padLeft(2, "0")}:${n.second.toString().padLeft(2, "0")} ${n.microsecond.toString().padLeft(3, "0")}";
+}
+
+void nDebugPrint(String signature, {required String icon, required int pageId}) {
+  print("$icon\t[$pageId] ${signature.padRight(12)}!\t$nDebugTimeStamp");
 }
