@@ -55,12 +55,18 @@ class _NaverMapState extends State<NaverMap>
           : controllerCompleter.future.then(updateOptionClosure);
     }
 
-    return _PlatformViewCreator.createPlatformView(
-      viewType: NChannel.naverMapNativeView.str,
-      gestureRecognizers: _createGestureRecognizers(widget.forceGesture),
-      creationParams: widget.options.toNPayload(),
-      onPlatformViewCreated: _onPlatformViewCreated,
-      androidSdkVersion: mapSdk._androidSdkVersion,
+    return Stack(
+      children: [
+        _PlatformViewCreator.createPlatformView(
+          viewType: NChannel.naverMapNativeView.str,
+          gestureRecognizers: _createGestureRecognizers(widget.forceGesture),
+          creationParams: widget.options.toNPayload(),
+          onPlatformViewCreated: _onPlatformViewCreated,
+          androidSdkVersion: mapSdk._androidSdkVersion,
+        ),
+        const LocationButtonWidget(),
+        const CompassWidget(),
+      ],
     );
   }
 

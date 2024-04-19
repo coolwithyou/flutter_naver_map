@@ -1,4 +1,4 @@
-part of flutter_naver_map;
+import "package:flutter/material.dart";
 
 class NCompassPainter extends CustomPainter {
   @override

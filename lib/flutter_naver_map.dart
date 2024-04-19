@@ -6,17 +6,20 @@ import "dart:async";
 import 'dart:developer' show log;
 import 'dart:io' show File, Platform;
 import 'dart:math' show Point, min, max;
-import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+
 import 'package:flutter_naver_map/src/messaging/messaging.dart';
 import 'package:flutter_naver_map/src/util/image_util.dart';
 import 'package:flutter_naver_map/src/util/math.dart';
 import 'package:flutter_naver_map/src/util/widget_to_image.dart';
+import "package:flutter_naver_map/src/widget/control_widget/compass_widget/painter/compass_painter.dart";
+import "package:flutter_naver_map/src/widget/control_widget/location_button_widget/painter/face_painter.dart";
+import "package:flutter_naver_map/src/widget/control_widget/location_button_widget/painter/follow_painter.dart";
 
 /*
   --- controller ---
@@ -81,12 +84,11 @@ part 'src/type/map/overlay/overlay_image.dart';
 /*
   --- painter ---
 */
-part 'src/widget/location_button_widget/painter/compass_painter.dart';
-part 'src/widget/location_button_widget/painter/face_painter.dart';
-part 'src/widget/location_button_widget/painter/follow_painter.dart';
 /*
   --- widget ---
 */
 part 'src/widget/map_widget.dart';
 part 'src/widget/platform_view.dart';
 part 'src/widget/control_widget/zoom_control_widget.dart';
+part 'src/widget/control_widget/location_button_widget/location_button_widget.dart';
+part 'src/widget/control_widget/compass_widget/compass_widget.dart';

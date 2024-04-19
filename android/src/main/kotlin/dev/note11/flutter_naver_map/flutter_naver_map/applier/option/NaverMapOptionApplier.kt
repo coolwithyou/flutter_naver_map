@@ -24,7 +24,7 @@ internal interface NaverMapOptionApplier {
     fun setRotationGesturesFriction(rawFriction: Any)
     fun setScaleBarEnable(rawEnable: Any)
     fun setIndoorLevelPickerEnable(rawEnable: Any)
-    fun setLocationButtonEnable(rawEnable: Any)
+    // fun setLocationButtonEnable(rawEnable: Any)
     fun setLogoClickEnable(rawEnable: Any)
     fun setLogoAlign(rawAlign: Any)
     fun setLogoMargin(rawEdgeInsets: Any)

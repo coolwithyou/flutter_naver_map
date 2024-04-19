@@ -1,4 +1,5 @@
-part of flutter_naver_map;
+import "package:flutter/widgets.dart";
+import "dart:ui" as ui;
 
 class NFacePainter extends CustomPainter {
   @override

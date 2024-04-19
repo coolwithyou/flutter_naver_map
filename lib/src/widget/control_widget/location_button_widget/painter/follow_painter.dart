@@ -1,4 +1,4 @@
-part of flutter_naver_map;
+import "package:flutter/widgets.dart";
 
 class NFollowPainter extends CustomPainter {
   @override
