@@ -1,13 +1,26 @@
-part of flutter_naver_map;
+part of "../../../flutter_naver_map.dart";
 
 abstract class NaverMapController implements _NaverMapControlSender {
   static NaverMapController _createController(MethodChannel controllerChannel,
-      {required int viewId}) {
+      {required int viewId, required NCameraPosition initialCameraPosition}) {
     final overlayController = _NOverlayControllerImpl(viewId: viewId);
-    return _NaverMapControllerImpl(controllerChannel, overlayController);
+    return _NaverMapControllerImpl(
+        controllerChannel, overlayController, initialCameraPosition);
   }
 
   void dispose();
+
+  /// 이 프로퍼티는 지금 카메라가 보여주고 있는 위치를 나타냅니다.
+  ///
+  /// This property allows you to retrieve the position of the camera currently displayed on the map.
+  ///
+  /// It is currently in the **experimental stage**.
+  ///
+  /// For exact results, please use the [getCameraPosition] method.
+  @experimental
+  NCameraPosition get nowCameraPosition;
+
+  void _updateNowCameraPositionData(NCameraPosition position);
 }
 
 class _NaverMapControllerImpl
@@ -18,7 +31,11 @@ class _NaverMapControllerImpl
 
   final _NOverlayController overlayController;
 
-  _NaverMapControllerImpl(this.channel, this.overlayController);
+  @override
+  NCameraPosition nowCameraPosition;
+
+  _NaverMapControllerImpl(
+      this.channel, this.overlayController, this.nowCameraPosition);
 
   @override
   Future<bool> updateCamera(NCameraUpdate cameraUpdate) async {
@@ -54,12 +71,13 @@ class _NaverMapControllerImpl
   }
 
   @override
-  Future<NLocationOverlay> getLocationOverlay() async {
-    final rawLocationOverlay = await invokeMethod("getLocationOverlay");
-    overlayController.locationOverlay ??=
-        NLocationOverlay._fromMessageable(rawLocationOverlay)
-          .._addedOnMap(overlayController);
-    return overlayController.locationOverlay!;
+  NLocationOverlay getLocationOverlay() {
+    if (overlayController.locationOverlay != null) {
+      return overlayController.locationOverlay!;
+    }
+    final lo = NLocationOverlay._attachToMapWhenFirstUse(overlayController);
+    overlayController.locationOverlay = lo;
+    return lo;
   }
 
   @override
@@ -75,26 +93,16 @@ class _NaverMapControllerImpl
   }
 
   @override
-  Future<double> getMeterPerDp({double? latitude, double? zoom}) {
-    final messageable = NMessageable.forOnceWithMap({
-      "latitude": latitude,
-      "zoom": zoom,
-    });
-    return invokeMethod("getMeterPerDp", messageable)
-        .then((value) => value as double);
+  double getMeterPerDp() {
+    return getMeterPerDpAtLatitude(
+        latitude: nowCameraPosition.target.latitude,
+        zoom: nowCameraPosition.zoom);
   }
 
   @override
-  Future<double> getMeterPerDpAtLatitude({
-    required double latitude,
-    required double zoom,
-  }) {
-    final messageable = NMessageable.forOnceWithMap({
-      "latitude": latitude,
-      "zoom": zoom,
-    });
-    return invokeMethod("getMeterPerDpAtLatitude", messageable)
-        .then((value) => value as double);
+  double getMeterPerDpAtLatitude(
+      {required double latitude, required double zoom}) {
+    return MathUtil.calcMeterPerDp(latitude, zoom);
   }
 
   @override
@@ -172,6 +180,11 @@ class _NaverMapControllerImpl
   @override
   void _updateOptions(NaverMapViewOptions options) {
     invokeMethod("updateOptions", options);
+  }
+
+  @override
+  void _updateNowCameraPositionData(NCameraPosition position) {
+    nowCameraPosition = position;
   }
 
   /*

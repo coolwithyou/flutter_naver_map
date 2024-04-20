@@ -10,7 +10,6 @@ import com.naver.maps.map.Projection
 import com.naver.maps.map.Symbol
 import com.naver.maps.map.indoor.IndoorSelection
 import com.naver.maps.map.overlay.LocationOverlay
-import dev.note11.flutter_naver_map.flutter_naver_map.controller.overlay.OverlayController
 import dev.note11.flutter_naver_map.flutter_naver_map.controller.overlay.OverlayHandler
 import dev.note11.flutter_naver_map.flutter_naver_map.converter.AddableOverlay
 import dev.note11.flutter_naver_map.flutter_naver_map.converter.AddableOverlay.Companion.toMessageable
@@ -38,6 +37,7 @@ internal class NaverMapController(
     private var naverMapViewOptions: NaverMapViewOptions? = null
 
     init {
+        overlayController.initializeLocationOverlay(naverMap.locationOverlay)
         channel.setMethodCallHandler(::handle)
     }
 
@@ -80,10 +80,6 @@ internal class NaverMapController(
 
     override fun getLocationOverlay(onSuccess: (Map<String, Any?>) -> Unit) {
         val overlay = naverMap.locationOverlay
-        val info = NOverlayInfo.locationOverlayInfo
-        if (!overlayController.hasOverlay(info)) {
-            overlayController.saveOverlay(overlay, info)
-        }
         onSuccess(overlay.toMessageable())
     }
 
@@ -227,10 +223,12 @@ internal class NaverMapController(
     }
 
     override fun onCameraChange(cameraUpdateReason: Int, animated: Boolean) {
+        val cameraPosition = naverMap.cameraPosition
         channel.invokeMethod(
             "onCameraChange", mapOf(
                 "reason" to cameraUpdateReason,
                 "animated" to animated,
+                "position" to cameraPosition.toMessageable()
             )
         )
     }
@@ -249,6 +247,6 @@ internal class NaverMapController(
 
     fun remove() {
         channel.setMethodCallHandler(null)
-        (overlayController as OverlayController).remove()
+        overlayController.remove()
     }
 }

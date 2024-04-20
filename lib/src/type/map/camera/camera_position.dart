@@ -1,5 +1,8 @@
-part of flutter_naver_map;
+part of "../../../../flutter_naver_map.dart";
 
+/// 카메라가 보여주는 곳을 나타낼 때 사용하는 객체입니다.
+///
+/// 문서를 참고하세요. [문서 보러가기](https://note11.dev/flutter_naver_map/element/camera#ncameraposition)
 class NCameraPosition with NMessageableWithMap {
   final NLatLng target;
   final double zoom;
@@ -20,6 +23,19 @@ class NCameraPosition with NMessageableWithMap {
       bearing: map["bearing"],
     );
   }
+
+  NCameraPosition copyWith({
+    NLatLng? target,
+    double? zoom,
+    double? tilt,
+    double? bearing,
+  }) =>
+      NCameraPosition(
+        target: target ?? this.target,
+        zoom: zoom ?? this.zoom,
+        bearing: bearing ?? this.bearing,
+        tilt: tilt ?? this.tilt,
+      );
 
   @override
   String toString() => "$runtimeType: ${toNPayload().map}";

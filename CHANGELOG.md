@@ -1,5 +1,57 @@
+## 1.2.2
+### Fix
+- [Android] Fix Only One Start Frame from Android TextureView Doesn't Copied to Flutter Platform View(TLHC) (issue: [#195](https://github.com/note11g/flutter_naver_map/issues/195), PR: [#212](https://github.com/note11g/flutter_naver_map/pull/212))
+
+### Improve
+- [All Platform] Add / Improve APIs
+  - Add: Add `NLocationOverlay.defaultIcon`, `defaultSubIcon`, `faceModeSubIcon`
+  - Improve: Change return type of method `NaverMapController.getLocationOverlay` to non-async (Future<NLocationOverlay> -> double)
+  - Improve: migrate `NOverlay`, `NAddableOverlay`, `NPickableInfo` Abstract Class to Sealed Class
+  - AddForTesting: Add NaverMap.forceHybridComposition, forceGLSurfaceView for testing
+- [Android] Apply migrate about android gradle plugin update (issue: [#198](https://github.com/note11g/flutter_naver_map/issues/198))
+- [All Platform] Change to no such overlay assertion instead NPE when delete overlay with info (issue: [#192](https://github.com/note11g/flutter_naver_map/issues/192))
+- [API Reference] Add API Reference about most of the APIs. (PR: [#193](https://github.com/note11g/flutter_naver_map/pull/193))
+
+
+## 1.2.2-pre.1
+### Improve
+- [All Platform] Add / Improve APIs
+  - Add: Add `NLocationOverlay.defaultIcon`, `defaultSubIcon`, `faceModeSubIcon`
+  - Improve: Change return type of method `NaverMapController.getLocationOverlay` to non-async (Future<NLocationOverlay> -> double)
+  - Improve: migrate `NOverlay`, `NAddableOverlay`, `NPickableInfo` Abstract Class to Sealed Class
+  - AddForTesting: Add NaverMap.forceHybridComposition, forceGLSurfaceView for testing
+- [Android] Apply migrate about android gradle plugin update (issue: [#198](https://github.com/note11g/flutter_naver_map/issues/198))
+- [All Platform] Change to no such overlay assertion instead NPE when delete overlay with info (issue: [#192](https://github.com/note11g/flutter_naver_map/issues/192))
+- [API Reference] Add API Reference about most of the APIs. (PR: [#193](https://github.com/note11g/flutter_naver_map/pull/193))
+
+### Fix
+- [All Platform] Fix LateInitializationError when Widget disposed before onMapReady (issue: [#197](https://github.com/note11g/flutter_naver_map/issues/197))
+
+## 1.2.1
+### Improve
+- [All Platform] Add / Improve APIs
+  - Add: Add `NCameraPosition.copyWith` method.
+### Fix
+- [Android] Fix PlatformView Issue for Android 13~14(>=API 33) (issue: [#189](https://github.com/note11g/flutter_naver_map/issues/189))
+- [iOS] Fix `NOverlayImage.fromAssetImage` Size issue. (issue: [#91](https://github.com/note11g/flutter_naver_map/issues/91), PR: [#185](https://github.com/note11g/flutter_naver_map/pull/185))
+
 ## 1.2.0
 
+### Improve
+- [All Platform] Add / Improve APIs
+  - Add property `NaverMapController.nowCameraPosition` as a experimental api which type is `NCameraPosition` (non-async)
+  - Add method `NCameraUpdate.setReason`
+  - Change return type of method `NaverMapController.getMeterPerDp` 
+      & `NaverMapController.getMeterPerDpAtLatitude` to non-async (Future<double> -> double)
+  - Change `NCameraUpdate.setAnimation` to have non-null parameters with default values
+  - Change property type `NaverMapViewOptions.initialCameraPosition` to non-nullable type
+
+### Breaking Change
+- [Flutter] Change support minimum Flutter SDK Version to 3.19.0, Dart 3.0.0 
+
+### Fix
+- [Android] Change Platform View display mode to TLHC (related issue [#152](https://github.com/note11g/flutter_naver_map/issues/152))
+- [Android] Change Flutter Render View to SurfaceView at Android 11~13 (related issue [#152](https://github.com/note11g/flutter_naver_map/issues/152))
 
 ## 1.1.2
 
@@ -40,7 +92,7 @@
 - [All Platform] Fix `NAddableOverlay` continues to reference the `OverlayController` of the map even after being removed (issue: [#127](https://github.com/note11g/flutter_naver_map/issues/127), PR: [#146](https://github.com/note11g/flutter_naver_map/pull/146))
 - [All Platform] Fix common overlay options were not applied before overlay was added to the map (issue: [#115](https://github.com/note11g/flutter_naver_map/issues/115), PR: [#144](https://github.com/note11g/flutter_naver_map/pull/144))
 - [All Platform] Fix `NLocationOverlay.setSubIcon(null)` Cause NPE (issue: [#142](https://github.com/note11g/flutter_naver_map/issues/142), PR: [#143](https://github.com/note11g/flutter_naver_map/pull/143))
-- [iOS] Fix NOverlayImage Size issue. (issue: [#91](https://github.com/note11g/flutter_naver_map/issues/91), [#130](https://github.com/note11g/flutter_naver_map/issues/130), PR: [#138](https://github.com/note11g/flutter_naver_map/pull/138), [#126](https://github.com/note11g/flutter_naver_map/pull/126))
+- [iOS] Fix `NOverlayImage` Size issue. (issue: [#91](https://github.com/note11g/flutter_naver_map/issues/91), [#130](https://github.com/note11g/flutter_naver_map/issues/130), PR: [#138](https://github.com/note11g/flutter_naver_map/pull/138), [#126](https://github.com/note11g/flutter_naver_map/pull/126))
 - [iOS] Fix the Camera Bearing issue. (issue: [#101](https://github.com/note11g/flutter_naver_map/issues/101), PR: [#110](https://github.com/note11g/flutter_naver_map/pull/110))
 
 ## 1.0.2

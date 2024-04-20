@@ -20,6 +20,7 @@ import 'package:flutter_naver_map/src/util/widget_to_image.dart';
 import "package:flutter_naver_map/src/widget/control_widget/compass_widget/painter/compass_painter.dart";
 import "package:flutter_naver_map/src/widget/control_widget/location_button_widget/painter/face_painter.dart";
 import "package:flutter_naver_map/src/widget/control_widget/location_button_widget/painter/follow_painter.dart";
+import "package:meta/meta.dart";
 
 /*
   --- controller ---
