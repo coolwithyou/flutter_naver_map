@@ -153,6 +153,20 @@ class _NaverMapViewOptionsExampleState
                     value: options.nightModeEnable,
                     onChanged: (v) =>
                         options = options.copyWith(nightModeEnable: v)),
+              TextSwitcher(
+                  title: "나침반 표시",
+                  description: ".compassEnable",
+                  value: options.compassEnable,
+                  onChanged: (enable) {
+                    void buttonEnable(bool v) =>
+                        options = options.copyWith(compassEnable: v);
+                    if (!enable) {
+                      buttonEnable(false);
+                      return;
+                    }
+                    requestLocationPermission(context,
+                        onGranted: () => buttonEnable(true));
+                  }),
             ]),
             SliverColumn([
               if (options.indoorEnable)

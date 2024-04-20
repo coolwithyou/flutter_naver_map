@@ -23,7 +23,9 @@ class ControlWidgetLayer extends StatelessWidget {
             left: options.contentPadding.left,
             top: options.contentPadding.top,
             right: options.contentPadding.right,
-            bottom: options.contentPadding.bottom,
+            bottom: options.contentPadding.bottom +
+                MediaQuery.paddingOf(context).bottom +
+                32,
             child: const LocationButtonWidget(),
           ),
         if (options.compassEnable)
