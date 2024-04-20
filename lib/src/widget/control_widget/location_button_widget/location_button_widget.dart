@@ -12,27 +12,23 @@ class _LocationButtonWidgetState extends State<LocationButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => {
-        setState(() {
-          isFacing = !isFacing;
-        })
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(40),
-        child: Row(
-          children: [
-            Container(
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(25),
-                child: CustomPaint(
-                  painter: isFacing ? NFollowPainter() : NFacePainter(),
-                  size: const Size(50, 50),
-                ),
-              ),
+    return UnconstrainedBox(
+      alignment: Alignment.bottomLeft,
+      child: GestureDetector(
+        onTap: () => {
+          setState(() {
+            isFacing = !isFacing;
+          })
+        },
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: CustomPaint(
+              painter: isFacing ? NFollowPainter() : NFacePainter(),
+              size: const Size(40, 40),
             ),
-          ],
+          ),
         ),
       ),
     );

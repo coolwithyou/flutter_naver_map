@@ -22,7 +22,7 @@ internal protocol NaverMapOptionApplier {
     func setRotationGesturesFriction(_ rawFriction: Any)
     func setScaleBarEnable(_ rawEnable: Any)
     func setIndoorLevelPickerEnable(_ rawEnable: Any)
-    // func setLocationButtonEnable(_ rawEnable: Any)
+    func setLocationButtonEnable(_ rawEnable: Any)
     func setLogoClickEnable(_ rawEnable: Any)
     func setLogoAlign(_ rawAlign: Any)
     func setLogoMargin(_ rawEdgeInsets: Any)

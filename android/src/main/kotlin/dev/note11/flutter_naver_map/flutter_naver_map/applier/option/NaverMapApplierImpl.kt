@@ -113,9 +113,9 @@ class NaverMapApplierImpl(
         naverMap.uiSettings.isIndoorLevelPickerEnabled = rawEnable.asBoolean()
     }
 
-    // override fun setLocationButtonEnable(rawEnable: Any) {
-    //     naverMap.uiSettings.isLocationButtonEnabled = rawEnable.asBoolean()
-    // }
+    override fun setLocationButtonEnable(rawEnable: Any) {
+        naverMap.uiSettings.isLocationButtonEnabled = rawEnable.asBoolean()
+    }
 
     override fun setLogoClickEnable(rawEnable: Any) {
         naverMap.uiSettings.isLogoClickEnabled = rawEnable.asBoolean()

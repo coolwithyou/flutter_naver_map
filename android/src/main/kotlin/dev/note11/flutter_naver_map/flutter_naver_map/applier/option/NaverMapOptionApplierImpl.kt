@@ -117,9 +117,9 @@ class NaverMapOptionApplierImpl(
         options.indoorLevelPickerEnabled(rawEnable.asBoolean())
     }
 
-    // override fun setLocationButtonEnable(rawEnable: Any) {
-    //     options.locationButtonEnabled(rawEnable.asBoolean())
-    // }
+    override fun setLocationButtonEnable(rawEnable: Any) {
+        options.locationButtonEnabled(rawEnable.asBoolean())
+    }
 
     override fun setLogoClickEnable(rawEnable: Any) {
         options.logoClickEnabled(rawEnable.asBoolean())

@@ -84,6 +84,7 @@ class _NaverMapState extends State<NaverMap>
   final controllerCompleter = Completer<void>();
   late NaverMapViewOptions nowViewOptions = widget.options;
   final mapSdk = NaverMapSdk.instance;
+  bool useStack = false;
 
   @override
   Widget build(BuildContext context) {
@@ -100,15 +101,21 @@ class _NaverMapState extends State<NaverMap>
           : controllerCompleter.future.then(updateOptionClosure);
     }
 
-    return _PlatformViewCreator.createPlatformView(
-      viewType: NChannel.naverMapNativeView.str,
-      gestureRecognizers: _createGestureRecognizers(widget.forceGesture),
-      creationParams: widget.options.toNPayload(),
-      onPlatformViewCreated: _onPlatformViewCreated,
-      androidSdkVersion: mapSdk._androidSdkVersion,
-      forceHybridComposition: widget.forceHybridComposition,
-      forceGLSurfaceView: widget.forceGLSurfaceView,
-    );
+    return Stack(children: [
+      _PlatformViewCreator.createPlatformView(
+        viewType: NChannel.naverMapNativeView.str,
+        gestureRecognizers: _createGestureRecognizers(widget.forceGesture),
+        creationParams: widget.options.toNPayload(),
+        onPlatformViewCreated: _onPlatformViewCreated,
+        androidSdkVersion: mapSdk._androidSdkVersion,
+        forceHybridComposition: widget.forceHybridComposition,
+        forceGLSurfaceView: widget.forceGLSurfaceView,
+      ),
+      ControlWidgetLayer(
+        controller: controllerCompleter.isCompleted ? controller : null,
+        options: widget.options,
+      ),
+    ]);
   }
 
   void _onPlatformViewCreated(int id) {

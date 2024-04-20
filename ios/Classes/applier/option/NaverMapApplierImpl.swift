@@ -117,9 +117,9 @@ internal class NaverMapApplierImpl: NaverMapOptionApplier {
         naverMapView.showIndoorLevelPicker = asBool(rawEnable)
     }
 
-    // func setLocationButtonEnable(_ rawEnable: Any) {
-    //     naverMapView.showLocationButton = asBool(rawEnable)
-    // }
+    func setLocationButtonEnable(_ rawEnable: Any) {
+        naverMapView.showLocationButton = asBool(rawEnable)
+    }
 
     func setLogoClickEnable(_ rawEnable: Any) {
         mapView.logoInteractionEnabled = asBool(rawEnable)
