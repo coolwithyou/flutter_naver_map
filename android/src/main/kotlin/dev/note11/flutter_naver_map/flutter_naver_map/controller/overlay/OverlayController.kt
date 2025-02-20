@@ -108,24 +108,26 @@ internal class OverlayController(
 
         requireNotNull(overlay) { "overlay can't found because it's null" }
 
-        val isInvokedOnCommonOverlay =
-            handleOverlay(overlay, query.methodName, call.arguments, result)
+        if (overlay != null) {
+            val isInvokedOnCommonOverlay =
+                handleOverlay(overlay, query.methodName, call.arguments, result)
 
-        if (!isInvokedOnCommonOverlay) {
-            val overlayHandleFunc = when (query.info.type) {
-                NOverlayType.MARKER -> this::handleMarker
-                NOverlayType.INFO_WINDOW -> this::handleInfoWindow
-                NOverlayType.CIRCLE_OVERLAY -> this::handleCircleOverlay
-                NOverlayType.GROUND_OVERLAY -> this::handleGroundOverlay
-                NOverlayType.POLYGON_OVERLAY -> this::handlePolygonOverlay
-                NOverlayType.POLYLINE_OVERLAY -> this::handlePolylineOverlay
-                NOverlayType.PATH_OVERLAY -> this::handlePathOverlay
-                NOverlayType.MULTIPART_PATH_OVERLAY -> this::handleMultipartPathOverlay
-                NOverlayType.ARROWHEAD_PATH_OVERLAY -> this::handleArrowheadPathOverlay
-                NOverlayType.LOCATION_OVERLAY -> this::handleLocationOverlay
-                NOverlayType.CLUSTERABLE_MARKER -> this::handleClusterableMarker
+            if (!isInvokedOnCommonOverlay) {
+                val overlayHandleFunc = when (query.info.type) {
+                    NOverlayType.MARKER -> this::handleMarker
+                    NOverlayType.INFO_WINDOW -> this::handleInfoWindow
+                    NOverlayType.CIRCLE_OVERLAY -> this::handleCircleOverlay
+                    NOverlayType.GROUND_OVERLAY -> this::handleGroundOverlay
+                    NOverlayType.POLYGON_OVERLAY -> this::handlePolygonOverlay
+                    NOverlayType.POLYLINE_OVERLAY -> this::handlePolylineOverlay
+                    NOverlayType.PATH_OVERLAY -> this::handlePathOverlay
+                    NOverlayType.MULTIPART_PATH_OVERLAY -> this::handleMultipartPathOverlay
+                    NOverlayType.ARROWHEAD_PATH_OVERLAY -> this::handleArrowheadPathOverlay
+                    NOverlayType.LOCATION_OVERLAY -> this::handleLocationOverlay
+                    NOverlayType.CLUSTERABLE_MARKER -> this::handleClusterableMarker
+                }
+                overlayHandleFunc(overlay, query.methodName, call.arguments, result)
             }
-            overlayHandleFunc(overlay, query.methodName, call.arguments, result)
         }
     }
 

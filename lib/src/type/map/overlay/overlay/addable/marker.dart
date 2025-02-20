@@ -198,16 +198,14 @@ class NMarker extends NAddableOverlay<NMarker> {
   ///
   /// 여기에 사용되는 정보창은 반드시 [NInfoWindow.onMarker]로 생성되어야 합니다.
   /// 또힌, 다른 마커에 열린 정보창은 재사용할 수 없습니다.
-  Future<void> openInfoWindow(NInfoWindow infoWindow,
-      {NAlign align = NAlign.top}) async {
+  Future<void> openInfoWindow(NInfoWindow infoWindow, {NAlign align = NAlign.top}) async {
     assert(infoWindow.withMarker);
     assert(_isAdded);
 
     _overlayControllers.forEach(infoWindow._addedOnMap);
     assert(infoWindow._isAdded);
 
-    final messageable =
-        NMessageable.forOnceWithMap({"infoWindow": infoWindow, "align": align});
+    final messageable = NMessageable.forOnceWithMap({"infoWindow": infoWindow, "align": align});
     await _runAsync(_openInfoWindowName, messageable);
   }
 
@@ -220,8 +218,9 @@ class NMarker extends NAddableOverlay<NMarker> {
   /// 마커의 아이콘을 지정합니다.
   /// `null`로 지정하는 경우, 기본 마커 아이콘을 사용합니다.
   void setIcon(NOverlayImage? value) {
+    print('call setIcon: $value');
     _icon = value;
-    _set(_iconName, _icon);
+    _set('icon', _icon);
   }
 
   /// 마커의 아이콘에 덧씌우는(혼합) 색상을 지정합니다. (가산혼합)
@@ -261,8 +260,9 @@ class NMarker extends NAddableOverlay<NMarker> {
   ///
   /// 기본 값은 마커의 아이콘 사이즈를 그대로 사용하는 [autoSize]입니다.
   void setSize(Size value) {
+    print('call setSize: $value');
     _size = value;
-    _set(_sizeName, _size);
+    _set('size', _size);
   }
 
   /// 마커에 텍스트 정보를 표시할 수 있는 캡션을 지정합니다.
